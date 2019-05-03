@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- origin at X=0.0 Y=0.0 -->
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:flowable="http://flowable.org/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="Definitions_1" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.0.Final-v20180515-1642-B1" targetNamespace="http://www.flowable.org/processdef">
+  <process id="signup-process" name="sign up a new user" isExecutable="true">
+    <startEvent id="start" flowable:initiator="initiator">
+      <outgoing>SequenceFlow_1</outgoing>
+    </startEvent>
+    <sequenceFlow id="SequenceFlow_1" sourceRef="start" targetRef="confirm-email-task"/>
+    <userTask id="confirm-email-task" flowable:assignee="${initiator}" name="confirm email">
+      <incoming>SequenceFlow_1</incoming>
+      <outgoing>SequenceFlow_2</outgoing>
+    </userTask>
+    <sequenceFlow id="SequenceFlow_2" sourceRef="confirm-email-task" targetRef="send-welcome-email-task"/>
+    <serviceTask id="send-welcome-email-task" flowable:expression="#{emailService.sendWelcomeEmail(customerId, email)}">
+      <incoming>SequenceFlow_2</incoming>
+      <outgoing>SequenceFlow_3</outgoing>
+    </serviceTask>
+    <sequenceFlow id="SequenceFlow_3" sourceRef="send-welcome-email-task" targetRef="end"/>
+    <endEvent id="end">
+      <incoming>SequenceFlow_3</incoming>
+    </endEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="signup-process">
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="start">
+        <omgdc:Bounds height="36.0" width="36.0" x="50.0" y="57.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_1" labelStyle="BPMNLabelStyle_1"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="confirm-email-task">
+        <omgdc:Bounds height="50.0" width="110.0" x="136.0" y="50.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_2" labelStyle="BPMNLabelStyle_1">
+          <omgdc:Bounds height="18.0" width="89.0" x="146.0" y="66.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ServiceTask_1" bpmnElement="send-welcome-email-task">
+        <omgdc:Bounds height="50.0" width="110.0" x="296.0" y="50.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_3" labelStyle="BPMNLabelStyle_1"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="end">
+        <omgdc:Bounds height="36.0" width="36.0" x="456.0" y="57.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_4" labelStyle="BPMNLabelStyle_1"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_UserTask_1">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="86.0" y="75.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="111.0" y="75.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="136.0" y="75.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_ServiceTask_1">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="246.0" y="75.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="271.0" y="75.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="296.0" y="75.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_6"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_ServiceTask_1" targetElement="BPMNShape_EndEvent_1">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="406.0" y="75.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="431.0" y="75.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="456.0" y="75.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_7"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
+      <omgdc:Font name="arial" size="9.0"/>
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</definitions>
